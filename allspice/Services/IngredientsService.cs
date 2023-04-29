@@ -29,4 +29,20 @@ public class IngredientsService
     Ingredient newIngredient = GetOne(ingredientId);
     return newIngredient;
   }
+
+  internal List<Ingredient> GetAll(int recipeId)
+  {
+    List<Ingredient> ingredients = _repo.GetAll(recipeId);
+    return ingredients;
+  }
+
+  internal string RemoveIngredient(int ingredientId, Account userInfo)
+  {
+    Ingredient ingredientToDelete = GetOne(ingredientId);
+    Recipe recipe = _recipesService.GetOne(ingredientToDelete.RecipeId);
+    if (recipe.CreatorId != userInfo.Id)
+      throw new Exception("You can't delete an ingredient off of someone else's recipe");
+    _repo.RemoveIngredient(ingredientId);
+    return $"{ingredientToDelete.Name} has been deleted.";
+  }
 }
