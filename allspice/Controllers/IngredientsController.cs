@@ -1,6 +1,7 @@
 namespace allspice.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class IngredientsController : ControllerBase
 {
